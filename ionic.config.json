@@ -1,0 +1,7 @@
+{
+  "name": "poolapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
