@@ -1,4 +1,4 @@
-import { IonAlert, IonContent, IonHeader, IonIcon, IonLoading, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import { IonAlert, IonContent, IonHeader, IonIcon, IonLoading, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { logIn } from 'ionicons/icons';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom'
@@ -11,7 +11,7 @@ interface IFormData {
 }
 
 export const Login = () => {
-    
+
     const { onChange, form } = useForm<IFormData>({
         user: '',
         pass: ''
@@ -22,7 +22,7 @@ export const Login = () => {
     const { user, pass } = form;
 
     const handleLogin = () => {
-        if(user.trim().length === 0 || pass.trim().length === 0){
+        if (user.trim().length === 0 || pass.trim().length === 0) {
             setError(true);
             return;
         }
@@ -42,16 +42,16 @@ export const Login = () => {
                     </IonToolbar>
                 </IonHeader>
 
-                <IonContent fullscreen scrollY={false}  className="content_io">
+                <IonContent fullscreen scrollY={false} className="content_io">
                     <IonHeader collapse="condense">
                         <IonToolbar>
                             <IonTitle size="large">Login</IonTitle>
                         </IonToolbar>
                     </IonHeader>
-                    
+
                     <div className="background"></div>
-                   
-                   
+
+
 
                     <div className="logo_login"></div>
 
@@ -83,19 +83,22 @@ export const Login = () => {
 
                         <p className="link">
                             ¿Aun no tienes cuenta?
-                            <Link to="/signup" style={{marginLeft:10}}>Crea tu cuenta aquí</Link>
+                            <Link to="/signup" style={{ marginLeft: 10 }}>Crea tu cuenta aquí</Link>
                         </p>
                     </div>
-           
-                    <IonAlert
+
+
+                    <IonModal
                         isOpen={error}
-                        onDidDismiss={() => setError(false)}
                         cssClass='my-custom-class'
-                        header={'Error'}
-                        // subHeader={'Subtitle'}
-                        message={'Todos los campos son obligatorios.'}
-                        buttons={['OK']}
-                    />
+                        onDidDismiss={() => setError(false)}
+                    >
+                        <div className="container_modal">
+                            <span className="title_modal">Error al iniciar sesion</span>
+                            <span className="msg_modal">Todos los datos son obligatorios</span>
+                            <button onClick={() => setError(false)} className="btn_close_modal" >Close Modal</button>
+                        </div>
+                    </IonModal>
                 </IonContent>
 
             </IonContent>

@@ -1,10 +1,13 @@
-import { IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { save } from 'ionicons/icons'
-import React from 'react'
+import React, { useState } from 'react'
 import Menu from '../components/Menu'
 import './Settings.css'
 
 export const Settigs = () => {
+
+  const [showModal, setShowModal] = useState(false)
+
   return (
     <>
       <Menu />
@@ -54,11 +57,23 @@ export const Settigs = () => {
             <span className="label_sett">Maximum:</span>
             <input type="number" />
 
-            <button className="btn_settings">
+            <button className="btn_settings" onClick={() => setShowModal(true)}>
               Save Changes
               <IonIcon slot="start" icon={save} className="icon_menu_Set" />
             </button>
           </div>
+
+          <IonModal
+            isOpen={showModal}
+            cssClass='my-custom-class'
+            onDidDismiss={() => setShowModal(false)}
+          >
+            <div className="container_modal">
+              <span className="title_modal">Lorem ipsum dolor sit.</span>
+              <span className="msg_modal">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+              <button onClick={() => setShowModal(false)} className="btn_close_modal" >Close Modal</button>
+            </div>
+          </IonModal>
         </IonContent>
       </IonPage>
     </>
