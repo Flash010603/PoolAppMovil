@@ -1,0 +1,145 @@
+.circle{
+    width: 150vw;
+    height: 50vh;
+    position: absolute;
+    top: -10%;
+    left: -25%;
+    background-color: rgb(0, 0, 0);
+    z-index: -1;
+    border-radius: 100%;
+}
+
+.loc,.nam{
+    background:none;
+    background-color: transparent;
+    /* padding: .5em; */
+    border: none;
+    outline: none; 
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+.loc{
+    margin-bottom: .5em;
+    font-size: 3em;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 5px 2px 10px rgba(255, 255, 255, 0.24);
+}
+.container_home{
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1em;
+}
+.contenedor_btns{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5em 0 2em 0;
+}
+.btn{
+    background: none;
+    padding: 1em 1em;
+    border-radius: 45px;
+    background-color: rgb(2, 116, 209);
+    border: 1px solid rgba(0, 0, 0, 0.664);
+    color: white;
+    font-size: 1em;
+    width: 80%;
+    font-weight: bold;
+}
+.btn:active{
+    background-color: #956eff; 
+}
+.contenedor_cards{
+
+}
+.card{
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 1em 0;
+    position: relative;
+    overflow: hidden;
+    margin: 2em 0;
+}
+.title_card{
+    display: block;
+    background-color: #46b9d6;
+    width: 80%;
+    margin: auto;
+    padding: .3em 0;
+    border-radius: 5px;
+    margin-bottom: .5em;
+    font-size: 1.6em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 5px 2px 10px black;
+}
+.data{
+    position: relative;
+    /* background-color: rgba(255, 255, 255, 0.274); */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2em;
+}
+.no_grid{
+    grid-template-columns: 1fr ;
+}
+.numero{
+    /* padding: 0 .1em; */
+    font-size: 10em;
+    font-weight: bold;
+}
+.n_ph{
+    
+}
+.tipo_dato{
+    font-size: 4em;
+}
+.icono{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(248, 245, 245, 0.384);
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px 0px 0px 0px;
+}
+.icon_home{
+    color: rgb(255, 255, 255);
+    font-size: 2em;
+}
+.btn_delete{
+    background: crimson;
+    border-radius: 45px;
+    padding: 1em 0;
+    margin: 1em 0 3em 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.icon_trash{
+    margin-left: 1em;
+    position: relative;
+    font-size: 1.5em;
+    top: -3px;
+}
+.btn_delete:active{
+    background-color: rgb(172, 5, 38);
+}
+ion-toolbar{
+    --background:rgb(2, 116, 209);
+    --color:white;
+}
+ion-content.content_page{
+    --background:rgb(48, 47, 47);
+    --color:white;
+}

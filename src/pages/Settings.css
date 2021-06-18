@@ -1,0 +1,43 @@
+.container_sett{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+.container_sett input, select{
+    color: black;
+    /* background-color: black; */
+    font-size: 1.2em;
+    padding: .3em;
+    border-radius: 5px;
+}
+.title_settings{
+    text-align: center;
+    margin: 1em 0;
+}
+
+.subtitle_settings{
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding-bottom: .5em;
+    border-bottom: 2px solid rgb(30, 146, 255);
+    margin: 1em 0;
+}
+.btn_settings{
+    border-radius: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    background: rgb(2, 116, 209);
+    color: white;
+    margin: 2em 0;
+}
+.btn_settings:active{
+    background: rgb(0, 88, 160);
+}
+.icon_menu_Set{
+    margin-left: 1em;
+}
