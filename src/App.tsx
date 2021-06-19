@@ -25,32 +25,44 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { Settigs } from './pages/Settigs';
+import { useContext } from 'react';
+import { DataContext } from './context/DataContext';
 
 const App: React.FC = () => {
+
+  const { user, setUser }: any = useContext(DataContext);
+  console.log(user)
   return (
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          
+
           <IonRouterOutlet id="main">
-            
-            <Route path="/login" exact={true}>
-              <Login />
-            </Route>
-            
-            <Route path="/signup" exact={true}>
-              <Signup />
-            </Route>
 
-            <Route path="/settings" exact={true}>
-              <Settigs />
-            </Route>
 
-            <Route path="/page" exact={true}>
-              <Page />
-            </Route>
 
-            <Redirect to="/login" />
+            <Route
+              path="/signup" 
+              exact={true}
+              component={Signup}
+            />
+
+            <Route
+              path="/settings" exact={true}
+              render={() => {
+                return user.isLogin ? <Settigs /> : <Login />;
+              }}
+            />
+
+            <Route
+              path="/"
+              exact={true}
+              render={() => {
+                return user.isLogin ? <Page /> : <Login />;
+              }}
+            />
+            <Redirect to="/" />
+
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

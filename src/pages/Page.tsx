@@ -24,7 +24,7 @@ const Page: React.FC = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton />
+              <IonMenuButton  />
             </IonButtons>
             {/* <IonTitle>Pagina</IonTitle> */}
           </IonToolbar>
@@ -38,17 +38,17 @@ const Page: React.FC = () => {
           </IonHeader>
           <div className="circle"></div>
           <div className="container_home">
+            
             <input
               className="loc"
               placeholder="Pool 1"
               type="text"
-
             />
+
             <input
               className="nam"
               placeholder="Location in:"
               type="text"
-
             />
 
             <div className="contenedor_btns">

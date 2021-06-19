@@ -1,12 +1,28 @@
-import { IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import { IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { save } from 'ionicons/icons'
 import React, { useState } from 'react'
 import Menu from '../components/Menu'
+import { useForm } from '../hooks/useForm'
 import './Settings.css'
+
+interface IFormData {
+  tmax: number,
+  tmin: number,
+  phmax: number,
+  phmin: number,
+  typeTemp: 'c' | 'f' | 'k',
+}
 
 export const Settigs = () => {
 
   const [showModal, setShowModal] = useState(false)
+  const { onChange, form:{ phmin,tmax,tmin,phmax,typeTemp } } = useForm<IFormData>({
+    tmax: 0,
+    tmin: 0,
+    phmax: 0,
+    phmin: 0,
+    typeTemp: "c",
+  })
 
   return (
     <>
@@ -15,13 +31,13 @@ export const Settigs = () => {
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
-              <IonMenuButton />
+              <IonMenuButton autoHide={true} />
             </IonButtons>
             {/* <IonTitle>Pagina</IonTitle> */}
           </IonToolbar>
         </IonHeader>
 
-        <IonContent fullscreen className="content_page">
+        <IonContent fullscreen className="content_page" scrollY={true} >
           <IonHeader collapse="condense">
             <IonToolbar>
               <IonTitle size="large">Pool</IonTitle>
@@ -33,7 +49,11 @@ export const Settigs = () => {
             <h1 className="title_settings">Settings Pool</h1>
 
             <span className="subtitle_settings">Measurement temperature</span>
-            <select>
+            <select
+              value={typeTemp}
+              name="typeTemp"
+              onChange={ onChange}
+            >
               <option value="">--- Selecciona una opcion ---</option>
               <option value="c">°C</option>
               <option value="f">°F</option>
@@ -43,19 +63,38 @@ export const Settigs = () => {
             <span className="subtitle_settings">Temperature configuration</span>
 
             <span className="label_sett">Minimum:</span>
-            <input type="number" />
-
+            <input 
+              type="number"
+              value={tmin}
+              name="tmin"
+              onChange={ onChange} 
+            />
             <span className="label_sett">Maximum:</span>
-            <input type="number" />
+            <input 
+              type="number"
+              value={tmax}
+              name="tmax"
+              onChange={ onChange} 
+            />
 
 
             <span className="subtitle_settings">pH configuration</span>
 
             <span className="label_sett">Minimum:</span>
-            <input type="number" />
+            <input 
+              type="number"
+              value={phmax}
+              name="phmax"
+              onChange={ (e)=>onChange(e)} 
+            />
 
             <span className="label_sett">Maximum:</span>
-            <input type="number" />
+            <input 
+              type="number"
+              value={phmin}
+              name="phmin"
+              onChange={ onChange} 
+            />
 
             <button className="btn_settings" onClick={() => setShowModal(true)}>
               Save Changes

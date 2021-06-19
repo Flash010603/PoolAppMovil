@@ -8,58 +8,75 @@ import {
   IonMenu,
   IonMenuToggle,
   IonButton,
-  IonText
+  IonText,
+  IonRouterOutlet
 } from '@ionic/react';
 
 import { useLocation, useHistory } from 'react-router-dom';
-import { settings, personCircle,home } from 'ionicons/icons';
+import { settings, personCircle, home } from 'ionicons/icons';
 import './Menu.css';
+import { DataContext } from '../context/DataContext';
+import { useContext } from 'react';
 
 
 
 
 const Menu: React.FC = () => {
+  const { user, setUser }: any = useContext(DataContext);
   const location = useLocation();
   const histoty = useHistory();
 
-  const handleClick = (route:string)=>{
-    histoty.push(`${route}`);
+
+  const handleClick = (route: string) => {
+
+    if (route === "") {
+      localStorage.removeItem("user");
+      histoty.push(`/`);
+      setUser({
+        user: '',
+        id: '',
+        isLogin: false
+      })
+      const i =document.getElementById("main");
+      i?.classList.remove("menu-content-open")
+      
+    } else {
+
+      histoty.push(`${route}`);
+
+    }
   }
 
   return (
-    <IonMenu contentId="main" type="overlay" side="end">
+    <IonMenu contentId="main" type="overlay">
       <IonContent>
-        
-          <span className="tu_meun">Options</span>
-          <div className="logo_login"></div>
-          <IonMenuToggle autoHide={false}>
 
-            {/* <IonItem className={location.pathname === "/page" ? 'selected' : 'notselected'} routerLink={'/page'} routerDirection="none" lines="none" detail={false}>
-              <IonIcon slot="start" ios={settings} md={settings} className="icon_menu" />
-              <IonLabel>Home Pool</IonLabel>
-            </IonItem>
+        <span className="tu_meun">
+          {/* <div>options</div> */}
+          <div>{user.user}</div>
+        </span>
+        <div className="logo_login_menu"></div>
+        <IonMenuToggle autoHide={false}>
 
-            <IonItem className={location.pathname === "/settings" ? '' : 'notselected'} routerLink={'/settings'} routerDirection="none" lines="none" detail={false}>
-              <IonIcon slot="start" ios={settings} md={settings} className="icon_menu" />
-              <IonLabel>Settings Pool</IonLabel>
-            </IonItem> */}
+          <IonButton className={location.pathname === "/" ? 'btn_select' : 'notselected'} expand="block" onClick={() => handleClick("/")}>
+            <IonIcon color="white" icon={home} className="icon_logout" />
+            <IonLabel className="label_logout">Home Pool</IonLabel>
+          </IonButton>
+        </IonMenuToggle>
 
-            <IonButton className={location.pathname === "/page" ? 'btn_select' : 'notselected'} expand="block" onClick={ ()=> handleClick("/page") }>
-              <IonIcon color="white" icon={home} className="icon_logout" />
-              <IonLabel className="label_logout">Home Pool</IonLabel>
-            </IonButton>
-            
-            <IonButton className={location.pathname === "/settings" ? 'btn_select' : 'notselected'}  expand="block" onClick={()=> handleClick("/settings") }>
-              <IonIcon color="white" icon={settings} className="icon_logout" />
-              <IonLabel className="label_logout">Settings Pool</IonLabel>
-            </IonButton>
+        <IonMenuToggle autoHide={false}>
+          <IonButton className={location.pathname === "/settings" ? 'btn_select' : 'notselected'} expand="block" onClick={() => handleClick("/settings")}>
+            <IonIcon color="white" icon={settings} className="icon_logout" />
+            <IonLabel className="label_logout">Settings Pool</IonLabel>
+          </IonButton>
+        </IonMenuToggle>
 
-            <IonButton className="btn_logout" expand="block" onClick={()=> handleClick("/login") }>
-              <IonIcon color="white" icon={personCircle} className="icon_logout" />
-              <IonLabel className="label_logout">Log out</IonLabel>
-            </IonButton>
-
-          </IonMenuToggle>
+        <IonMenuToggle autoHide={false}>
+          <IonButton className="btn_logout" expand="block" onClick={() => handleClick("")}>
+            <IonIcon color="white" icon={personCircle} className="icon_logout" />
+            <IonLabel className="label_logout">Log out</IonLabel>
+          </IonButton>
+        </IonMenuToggle>
 
       </IonContent>
     </IonMenu>

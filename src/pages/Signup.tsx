@@ -1,37 +1,46 @@
 import { IonAlert, IonContent, IonHeader, IonIcon, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { logIn } from 'ionicons/icons';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { DataContext } from '../context/DataContext';
 import { useForm } from '../hooks/useForm';
 import './Signup.css';
 interface IFormData {
-    user: string,
+    username: string,
     pass: string,
     email: string,
 
 }
 export const Signup = () => {
 
+    const { user, setUser }: any = useContext(DataContext);
+
     const { onChange, form } = useForm<IFormData>({
-        user: '',
+        username: '',
         pass: '',
         email: ''
     });
     const history = useHistory();
     const [error, setError] = useState(false);
 
-    const { user, pass, email } = form;
+    const { username, pass, email } = form;
 
     const handleLogin = () => {
-        if (user.trim().length === 0 || pass.trim().length === 0 || email.trim().length === 0) {
+        if (username.trim().length === 0 || pass.trim().length === 0 || email.trim().length === 0) {
             setError(true);
             return;
         }
 
-        //TODO: Hacer la petición Post
+        const data = {
+            user:username,
+            id:'123',
+            isLogin:true
+        }
+        
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(data)
 
-        history.replace("/page");
-        // localStorage.setItem("user", JSON.stringify(form));
+        history.replace("/");
     }
 
     return (
@@ -57,14 +66,14 @@ export const Signup = () => {
                     <div className="logo_login_s"></div>
 
                     <div className="container_login">
-                        <h1 className="title_login">Crear cuenta</h1>
+                        <h1 className="title_sign">Crear cuenta</h1>
                         <div className="container_input">
                             <input
                                 type="text"
                                 className="user"
                                 placeholder="username"
-                                name="user"
-                                value={user}
+                                name="username"
+                                value={username}
                                 onChange={onChange}
                             />
 
@@ -87,13 +96,13 @@ export const Signup = () => {
                             />
 
                         </div>
-                        <button className="btn_login" onClick={handleLogin}>Crear cuenta
+                        <button className="btn_sign" onClick={handleLogin}>Crear cuenta
                             <IonIcon slot="start" icon={logIn} className="icon_menu" />
                         </button>
 
                         <p className="link">
                             ¿Ya tienes cuenta?
-                            <Link to="/login" style={{ marginLeft: 10 }}>Inicia sesion</Link>
+                            <Link to="/" style={{ marginLeft: 10 }}>Inicia sesion</Link>
                         </p>
                     </div>
 

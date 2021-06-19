@@ -22,10 +22,10 @@
     font-size: 3em;
     text-align: center;
     font-weight: bold;
-    text-shadow: 5px 2px 10px rgba(255, 255, 255, 0.24);
+    /* text-shadow: 5px 2px 10px rgba(255, 255, 255, 0.24); */
 }
 .container_home{
-    width: 85%;
+    width: 90%;
     margin: 0 auto;
     text-align: center;
     display: flex;
@@ -50,11 +50,9 @@
     font-weight: bold;
 }
 .btn:active{
-    background-color: #956eff; 
+    background-color: rgb(3, 79, 141);
 }
-.contenedor_cards{
 
-}
 .card{
     border: 1px solid white;
     border-radius: 5px;
@@ -62,11 +60,12 @@
     position: relative;
     overflow: hidden;
     margin: 2em 0;
+    min-height: 39vh;
 }
 .title_card{
     display: block;
-    background-color: #46b9d6;
-    width: 80%;
+    background-color: #6546d6;
+    width: 90%;
     margin: auto;
     padding: .3em 0;
     border-radius: 5px;
@@ -88,12 +87,10 @@
 }
 .numero{
     /* padding: 0 .1em; */
-    font-size: 10em;
+    font-size: 6em;
     font-weight: bold;
 }
-.n_ph{
-    
-}
+
 .tipo_dato{
     font-size: 4em;
 }
@@ -127,7 +124,7 @@
     color: white;
 }
 .icon_trash{
-    margin-left: 1em;
+    margin-left: .3em;
     position: relative;
     font-size: 1.5em;
     top: -3px;

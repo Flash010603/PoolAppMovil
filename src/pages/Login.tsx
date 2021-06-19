@@ -1,36 +1,42 @@
-import { IonAlert, IonContent, IonHeader, IonIcon, IonLoading, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import {  IonContent, IonHeader, IonIcon, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { logIn } from 'ionicons/icons';
-import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom'
+import { DataContext } from '../context/DataContext';
 import { useForm } from '../hooks/useForm';
 import './Login.css';
 
 interface IFormData {
-    user: string,
+    username: string,
     pass: string
 }
 
 export const Login = () => {
+    
+    const { user, setUser }: any = useContext(DataContext);
 
     const { onChange, form } = useForm<IFormData>({
-        user: '',
+        username: '',
         pass: ''
     });
-    const history = useHistory();
     const [error, setError] = useState(false);
 
-    const { user, pass } = form;
+    const { username, pass } = form;
 
     const handleLogin = () => {
-        if (user.trim().length === 0 || pass.trim().length === 0) {
+        if (username.trim().length === 0 || pass.trim().length === 0) {
             setError(true);
             return;
         }
-
-        //TODO: Hacer la petición Post
-
-        history.replace("/page");
-        // localStorage.setItem("user", JSON.stringify(form));
+        const data = {
+            user:username,
+            id:'123',
+            isLogin:true
+        }
+        
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(data)
+        
     }
 
     return (
@@ -49,7 +55,7 @@ export const Login = () => {
                         </IonToolbar>
                     </IonHeader>
 
-                    <div className="background"></div>
+                    <div className="background_login"></div>
 
 
 
@@ -62,8 +68,8 @@ export const Login = () => {
                                 type="text"
                                 className="user"
                                 placeholder="username"
-                                name="user"
-                                value={user}
+                                name="username"
+                                value={username}
                                 onChange={onChange}
                             />
 
