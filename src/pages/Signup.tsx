@@ -3,13 +3,15 @@ import { logIn } from 'ionicons/icons';
 import React, { useContext, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { DataContext } from '../context/DataContext';
+import { url } from '../helper/url';
 import { useForm } from '../hooks/useForm';
+import { IUser } from '../interfaces/Interface';
 import './Signup.css';
 interface IFormData {
     username: string,
     pass: string,
     email: string,
-
+    name:string
 }
 export const Signup = () => {
 
@@ -18,23 +20,43 @@ export const Signup = () => {
     const { onChange, form } = useForm<IFormData>({
         username: '',
         pass: '',
-        email: ''
+        email: '',
+        name:''
     });
     const history = useHistory();
     const [error, setError] = useState(false);
 
-    const { username, pass, email } = form;
+    const { username, pass, email, name } = form;
 
-    const handleLogin = () => {
-        if (username.trim().length === 0 || pass.trim().length === 0 || email.trim().length === 0) {
+    const handleLogin = async() => {
+        if (username.trim().length === 0 || pass.trim().length === 0 || email.trim().length === 0 || name.trim().length === 0) {
             setError(true);
             return;
         }
 
+        const urlLogin = `${url}/user`;
+
+        const dataPost = {
+            name,
+            email,
+            username,
+            password:pass
+        }
+
+        const res = await fetch(urlLogin, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataPost)
+        });
+
+        const response: IUser  = await res.json();
+        console.log(response)
         const data = {
-            user:username,
-            id:'123',
-            isLogin:true
+            user: response.name,
+            id: response.id,
+            isLogin: true
         }
         
         localStorage.setItem("user", JSON.stringify(data));
@@ -61,13 +83,20 @@ export const Signup = () => {
 
                     <div className="background"></div>
 
-
-
                     <div className="logo_login_s"></div>
 
                     <div className="container_login">
                         <h1 className="title_sign">Crear cuenta</h1>
                         <div className="container_input">
+                            <input
+                                type="text"
+                                className="user"
+                                placeholder="fullname"
+                                name="name"
+                                value={name}
+                                onChange={onChange}
+                            />
+
                             <input
                                 type="text"
                                 className="user"
@@ -87,7 +116,7 @@ export const Signup = () => {
                             />
 
                             <input
-                                type="password"
+                                type="email"
                                 className="user"
                                 placeholder="email"
                                 name="email"

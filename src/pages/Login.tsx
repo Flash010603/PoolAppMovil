@@ -1,9 +1,11 @@
-import {  IonContent, IonHeader, IonIcon, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
+import { IonContent, IonHeader, IonIcon, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react'
 import { logIn } from 'ionicons/icons';
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { DataContext } from '../context/DataContext';
+import { url } from '../helper/url';
 import { useForm } from '../hooks/useForm';
+import { IUser } from '../interfaces/Interface';
 import './Login.css';
 
 interface IFormData {
@@ -12,7 +14,7 @@ interface IFormData {
 }
 
 export const Login = () => {
-    
+
     const { user, setUser }: any = useContext(DataContext);
 
     const { onChange, form } = useForm<IFormData>({
@@ -23,20 +25,33 @@ export const Login = () => {
 
     const { username, pass } = form;
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         if (username.trim().length === 0 || pass.trim().length === 0) {
             setError(true);
             return;
         }
-        const data = {
-            user:username,
-            id:'123',
-            isLogin:true
-        }
+
+        const urlLogin = `${url}/user/${username}&${pass}`;
         
+        const res = await fetch(urlLogin, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        });
+
+        const response: IUser  = await res.json();
+        
+        const data = {
+            user: response.name,
+            id: response.id,
+            isLogin: true
+        }
+
         localStorage.setItem("user", JSON.stringify(data));
         setUser(data)
-        
+
     }
 
     return (

@@ -31,7 +31,7 @@ import { DataContext } from './context/DataContext';
 const App: React.FC = () => {
 
   const { user, setUser }: any = useContext(DataContext);
-  console.log(user)
+
   return (
     <IonApp>
       <IonReactRouter>

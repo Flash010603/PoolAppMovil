@@ -14,6 +14,7 @@ export const useForm = <T extends Object>(initState: T ) => {
 
     return {
         form,
-        onChange
+        onChange,
+        setForm
     }
 }
