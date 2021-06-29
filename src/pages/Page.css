@@ -36,7 +36,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1.5em 0 2em 0;
+    margin: 1.5em 1.8em 0;
 }
 .btn{
     background: none;
@@ -110,6 +110,12 @@
     color: rgb(255, 255, 255);
     font-size: 2em;
 }
+.buttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .btn_delete{
     background: crimson;
     border-radius: 45px;
@@ -169,12 +175,35 @@ ion-content.content_page{
     text-align: center;
     padding: 0 1em;
 }
-.btn_close_modal{
+.btn_close_modal_home{
     padding: 1em 0;
     border: none;
-    background-color:rgb(2, 116, 209);
     color: white;
     font-weight: bold;
+    background-color:rgba(2, 57, 209, 0.795);
     /* letter-spacing: 1px; */
     /* font-size: 1.1em; */
+}
+.btn_delete_modal{
+    background-color:rgb(209, 2, 2);
+}
+.btn_update_data{
+    width: 1.8em;
+    height: 1.8em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2.5em ;
+    background-color: rgb(2, 116, 209);
+    border: 1px solid rgb(6, 58, 100);
+
+    position: fixed;
+    bottom: 3%;
+    left: 3%;
+    z-index: 1000;
+}
+.btn_update_data:active{
+    background-color: rgb(5, 91, 161);
 }
