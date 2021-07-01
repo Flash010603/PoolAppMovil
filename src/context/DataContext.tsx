@@ -12,7 +12,7 @@ export const DataProvider:React.FC = ({ children }) => {
     
     const userStorage:any = localStorage.getItem("user");
     const us = JSON.parse(userStorage);  
-    console.log(us)
+   
 
     const [user, setUser] = useState<IUser>({
         user: (us) ? us.user : '',

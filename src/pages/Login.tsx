@@ -21,18 +21,24 @@ export const Login = () => {
         username: '',
         pass: ''
     });
-    const [error, setError] = useState(false);
+    const [error, setError] = useState({
+        isShow: false,
+        msg: ""
+    });
 
     const { username, pass } = form;
 
     const handleLogin = async () => {
         if (username.trim().length === 0 || pass.trim().length === 0) {
-            setError(true);
+            setError({
+                isShow: true,
+                msg: "Todos los datos son obligatorios"
+            });
             return;
         }
 
         const urlLogin = `${url}/user/${username}&${pass}`;
-        
+
         const res = await fetch(urlLogin, {
             method: 'POST',
             headers: {
@@ -41,16 +47,25 @@ export const Login = () => {
             body: JSON.stringify(form)
         });
 
-        const response: IUser  = await res.json();
-        
-        const data = {
-            user: response.name,
-            id: response.id,
-            isLogin: true
-        }
+        try {
+            const response: IUser = await res.json();
 
-        localStorage.setItem("user", JSON.stringify(data));
-        setUser(data)
+            const data = {
+                user: response.name,
+                id: response.id,
+                isLogin: true
+            }
+
+            localStorage.setItem("user", JSON.stringify(data));
+            setUser(data)
+
+
+        } catch (error) {
+            setError({
+                isShow: true,
+                msg: "Error en el usuario y/o contraseña"
+            });
+        }
 
     }
 
@@ -77,12 +92,12 @@ export const Login = () => {
                     <div className="logo_login"></div>
 
                     <div className="container_login">
-                        <h1 className="title_login">Login</h1>
+                        <h1 className="title_login">Inicio de sesión</h1>
                         <div className="container_input">
                             <input
                                 type="text"
                                 className="user"
-                                placeholder="username"
+                                placeholder="Nombre de usuario"
                                 name="username"
                                 value={username}
                                 onChange={onChange}
@@ -91,7 +106,7 @@ export const Login = () => {
                             <input
                                 type="password"
                                 className="pass"
-                                placeholder="password"
+                                placeholder="Contraseña"
                                 name="pass"
                                 value={pass}
                                 onChange={onChange}
@@ -103,21 +118,27 @@ export const Login = () => {
                         </button>
 
                         <p className="link">
-                            ¿Aun no tienes cuenta?
+                            ¿Aún no tienes cuenta?
                             <Link to="/signup" style={{ marginLeft: 10 }}>Crea tu cuenta aquí</Link>
                         </p>
                     </div>
 
 
                     <IonModal
-                        isOpen={error}
+                        isOpen={error.isShow}
                         cssClass='my-custom-class'
-                        onDidDismiss={() => setError(false)}
+                        onDidDismiss={() => setError({
+                            isShow: false,
+                            msg: ""
+                        })}
                     >
-                        <div className="container_modal">
-                            <span className="title_modal">Error al iniciar sesion</span>
-                            <span className="msg_modal">Todos los datos son obligatorios</span>
-                            <button onClick={() => setError(false)} className="btn_close_modal" >Close Modal</button>
+                        <div className="container_modal_">
+                            <span className="title_modal_l">Error al iniciar sesión</span>
+                            <span className="msg_modal">{error.msg}</span>
+                            <button onClick={() => setError({
+                                isShow: false,
+                                msg: ""
+                            })} className="btn_close_modal" >Cerrar alerta</button>
                         </div>
                     </IonModal>
                 </IonContent>

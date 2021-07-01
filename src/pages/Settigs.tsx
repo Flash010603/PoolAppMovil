@@ -2,6 +2,7 @@ import { IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonMenuButton, Io
 import { save } from 'ionicons/icons'
 import React, { useContext, useEffect, useState } from 'react'
 import Menu from '../components/Menu'
+import { NoDataPool } from '../components/NoDataPool'
 import { DataContext } from '../context/DataContext'
 import { url } from '../helper/url'
 import { useForm } from '../hooks/useForm'
@@ -83,6 +84,9 @@ export const Settigs = () => {
       },
       body: JSON.stringify(data_pool)
     });
+
+  
+
     if (res.ok) setShowModal(true);
   }
 
@@ -111,9 +115,9 @@ export const Settigs = () => {
               (isDataExists)
                 ?
                 <>
-                  <h1 className="title_settings">Settings Pool</h1>
+                  <h1 className="title_settings">Configruación de la piscina</h1>
 
-                  <span className="subtitle_settings">Measurement temperature</span>
+                  <span className="subtitle_settings">Medida de temperatura:</span>
                   <select
                     value={typeTemp}
                     name="typeTemp"
@@ -125,16 +129,16 @@ export const Settigs = () => {
                     <option value="k">°K</option>
                   </select>
 
-                  <span className="subtitle_settings">Temperature configuration</span>
+                  <span className="subtitle_settings">Configuración de temperatura</span>
 
-                  <span className="label_sett">Minimum:</span>
+                  <span className="label_sett">Mínimo:</span>
                   <input
                     type="number"
                     value={tmin}
                     name="tmin"
                     onChange={onChange}
                   />
-                  <span className="label_sett">Maximum:</span>
+                  <span className="label_sett">Máximo:</span>
                   <input
                     type="number"
                     value={tmax}
@@ -143,9 +147,9 @@ export const Settigs = () => {
                   />
 
 
-                  <span className="subtitle_settings">pH configuration</span>
+                  <span className="subtitle_settings">Configuración de pH</span>
 
-                  <span className="label_sett">Minimum:</span>
+                  <span className="label_sett">Mínimo:</span>
                   <input
                     type="number"
                     value={phmax}
@@ -153,7 +157,7 @@ export const Settigs = () => {
                     onChange={(e) => onChange(e)}
                   />
 
-                  <span className="label_sett">Maximum:</span>
+                  <span className="label_sett">Máximo:</span>
                   <input
                     type="number"
                     value={phmin}
@@ -162,11 +166,11 @@ export const Settigs = () => {
                   />
 
                   <button className="btn_settings" onClick={handleSaveChanges}>
-                    Save Changes
+                    Guardar cambios
                     <IonIcon slot="start" icon={save} className="icon_menu_Set" />
                   </button>
                 </>
-                : <p>No hay piscina configurada</p>
+                : <NoDataPool/>
             }
 
           </div>
@@ -176,10 +180,10 @@ export const Settigs = () => {
             cssClass='my-custom-class'
             onDidDismiss={() => setShowModal(false)}
           >
-            <div className="container_modal">
-              <span className="title_modal">Lorem ipsum dolor sit.</span>
-              <span className="msg_modal">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
-              <button onClick={() => setShowModal(false)} className="btn_close_modal" >Close Modal</button>
+            <div className="container_modal_">
+              <span className="title_modal_l">Operación realizada</span>
+              <span className="msg_modal">La operación se realizo correctamente</span>
+              <button onClick={() => setShowModal(false)} className="btn_close_modal" >Cerrar alerta</button>
             </div>
           </IonModal>
         </IonContent>

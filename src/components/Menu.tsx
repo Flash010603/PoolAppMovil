@@ -60,21 +60,21 @@ const Menu: React.FC = () => {
 
           <IonButton className={location.pathname === "/" ? 'btn_select' : 'notselected'} expand="block" onClick={() => handleClick("/")}>
             <IonIcon color="white" icon={home} className="icon_logout" />
-            <IonLabel className="label_logout">Home Pool</IonLabel>
+            <IonLabel className="label_logout">Inicio</IonLabel>
           </IonButton>
         </IonMenuToggle>
 
         <IonMenuToggle autoHide={false}>
           <IonButton className={location.pathname === "/settings" ? 'btn_select' : 'notselected'} expand="block" onClick={() => handleClick("/settings")}>
             <IonIcon color="white" icon={settings} className="icon_logout" />
-            <IonLabel className="label_logout">Settings Pool</IonLabel>
+            <IonLabel className="label_logout">Configuración</IonLabel>
           </IonButton>
         </IonMenuToggle>
 
         <IonMenuToggle autoHide={false}>
           <IonButton className="btn_logout" expand="block" onClick={() => handleClick("")}>
             <IonIcon color="white" icon={personCircle} className="icon_logout" />
-            <IonLabel className="label_logout">Log out</IonLabel>
+            <IonLabel className="label_logout">Salir</IonLabel>
           </IonButton>
         </IonMenuToggle>
 

@@ -31,14 +31,20 @@ import { DataContext } from './context/DataContext';
 const App: React.FC = () => {
 
   const { user, setUser }: any = useContext(DataContext);
-
+  // console.log(user)
   return (
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
 
           <IonRouterOutlet id="main">
-
+          <Route
+              path="/"
+              exact={true}
+              render={() => {
+                return user.isLogin ? <Page /> : <Login />;
+              }}
+            />
 
 
             <Route
@@ -54,13 +60,7 @@ const App: React.FC = () => {
               }}
             />
 
-            <Route
-              path="/"
-              exact={true}
-              render={() => {
-                return user.isLogin ? <Page /> : <Login />;
-              }}
-            />
+            
             <Redirect to="/" />
 
           </IonRouterOutlet>

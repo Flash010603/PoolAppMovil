@@ -33,7 +33,7 @@ export const Signup = () => {
             setError(true);
             return;
         }
-
+        
         const urlLogin = `${url}/user`;
 
         const dataPost = {
@@ -52,7 +52,7 @@ export const Signup = () => {
         });
 
         const response: IUser  = await res.json();
-        console.log(response)
+        
         const data = {
             user: response.name,
             id: response.id,
@@ -61,8 +61,8 @@ export const Signup = () => {
         
         localStorage.setItem("user", JSON.stringify(data));
         setUser(data)
-
-        history.replace("/");
+        
+        history.push("/");
     }
 
     return (
@@ -74,7 +74,7 @@ export const Signup = () => {
                     </IonToolbar>
                 </IonHeader>
 
-                <IonContent fullscreen scrollY={false} className="content_io">
+                <IonContent fullscreen scrollY={true} className="content_io">
                     <IonHeader collapse="condense">
                         <IonToolbar>
                             <IonTitle size="large">Login</IonTitle>
@@ -91,7 +91,7 @@ export const Signup = () => {
                             <input
                                 type="text"
                                 className="user"
-                                placeholder="fullname"
+                                placeholder="Nombre Completo"
                                 name="name"
                                 value={name}
                                 onChange={onChange}
@@ -100,7 +100,7 @@ export const Signup = () => {
                             <input
                                 type="text"
                                 className="user"
-                                placeholder="username"
+                                placeholder="Nombre de usuario"
                                 name="username"
                                 value={username}
                                 onChange={onChange}
@@ -109,7 +109,7 @@ export const Signup = () => {
                             <input
                                 type="password"
                                 className="pass"
-                                placeholder="password"
+                                placeholder="Contraseña"
                                 name="pass"
                                 value={pass}
                                 onChange={onChange}
@@ -118,10 +118,17 @@ export const Signup = () => {
                             <input
                                 type="email"
                                 className="user"
-                                placeholder="email"
+                                placeholder="Correo electronico"
                                 name="email"
                                 value={email}
                                 onChange={onChange}
+                            />
+
+                            <input
+                                type="text"
+                                className="user"
+                                placeholder="Red del sensor"
+                                
                             />
 
                         </div>
@@ -129,9 +136,9 @@ export const Signup = () => {
                             <IonIcon slot="start" icon={logIn} className="icon_menu" />
                         </button>
 
-                        <p className="link">
+                        <p className="link" style={{marginBottom:20}}>
                             ¿Ya tienes cuenta?
-                            <Link to="/" style={{ marginLeft: 10 }}>Inicia sesion</Link>
+                            <Link to="/" style={{ marginLeft: 10 }}>Inicia sesión</Link>
                         </p>
                     </div>
 
@@ -141,8 +148,8 @@ export const Signup = () => {
                     cssClass='my-custom-class'
                     onDidDismiss={() => setError(false)}
                 >
-                    <div className="container_modal">
-                        <span className="title_modal">Error al crear la cuenta</span>
+                    <div className="container_modal_">
+                        <span className="title_modal_l">Error al crear la cuenta</span>
                         <span className="msg_modal">Todos los datos son obligatorios</span>
                         <button onClick={() => setError(false)} className="btn_close_modal" >Close Modal</button>
                     </div>

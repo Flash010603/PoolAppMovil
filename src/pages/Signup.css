@@ -1,11 +1,11 @@
 
 .background{
-    width: 100vw;
+    width: 110vw;
     height: 25vh;
-    background-color: rgb(75, 75, 75);
+    background-color:  rgb(0, 140, 255);
     position: absolute;
     top: -10.5%;
-    left: 0%;
+    left: -4.5%;
     z-index: 1;
     border-radius: 50%;
 }
@@ -13,10 +13,12 @@
 .logo_login_s{
     width: 90px;
     height: 90px;
-    position: fixed;
-    top: 5%;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 2em;
+    /* top: 5%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); */
     background-color: rgb(0, 140, 255);
     border: 3px solid white;
     border-radius: 100%;
@@ -25,12 +27,12 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: 3em;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .title_sign{
     margin: .5em;
-    margin-top: 3.5em;
+    /* margin-top: 3.5em; */
     color: white;
     text-shadow: 4px 2px 3px rgba(255, 255, 255, 0.219);
     text-align: center;
@@ -79,9 +81,7 @@
 .icon_menu{
     font-size: 1.7em;
 }
-ion-content.content_io{
-    --background:rgb(19, 19, 19);
-}
+
 .link{
     position: relative;
     color:white;

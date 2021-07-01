@@ -1,8 +1,9 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonIcon, IonMenuButton, IonModal, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { thermometer, water, trash, reloadCircle } from 'ionicons/icons';
+import { thermometer, water, trash, reloadCircle, save } from 'ionicons/icons';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Menu from '../components/Menu';
+import { NoDataPool } from '../components/NoDataPool';
 import { DataContext } from '../context/DataContext';
 import { url } from '../helper/url';
 import { useForm } from '../hooks/useForm';
@@ -34,8 +35,11 @@ const Page: React.FC = () => {
     const urlPool = `${url}/pool/user/${user.id}`;
     const res = await fetch(urlPool);
     const data_pool: IPool[] = await res.json();
-
+    
     if (data_pool.length > 0) {
+      
+      data_pool[0].temp_current = conversion( data_pool[0].temp_current,  data_pool[0].grados);
+     
       setData(data_pool)
       setForm({
         location: data_pool[0].location,
@@ -62,10 +66,10 @@ const Page: React.FC = () => {
       const temp = data?.[0].temp_current;
       const temp_max = data?.[0].temp_max;
       const temp_min = data?.[0].temp_min;
-      
-  
+
   
       if( ph > ph_max || ph < ph_min ){
+        
         setModal({
           isShow: true,
           msg: "Revisa tu piscina",
@@ -108,8 +112,8 @@ const Page: React.FC = () => {
       body: JSON.stringify(data_pool)
     });
 
-    const data_res = await res.json();
-    console.log(data_res)
+    const data_res: IPool = await res.json();
+    data_res.temp_current = conversion(data_res.temp_current, data_res.grados);
     const newData: IPool[] = [data_res];
     setData(newData)
     setModal({
@@ -135,6 +139,12 @@ const Page: React.FC = () => {
   }
 
   const handleUpdate = async () => {
+    const _urlPool = `${url}/pool/${data?.[0].id}`;
+    const _res = await fetch(_urlPool);
+    const _data_pool: IPool = await _res.json();
+
+  
+    
     let urlPool = `${url}/pool`;
 
     let res = await fetch(urlPool, {
@@ -142,13 +152,34 @@ const Page: React.FC = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data?.[0])
+      body: JSON.stringify(_data_pool)
     });
 
     const data_pool = await res.json();
+    data_pool.temp_current = conversion(data_pool.temp_current, data_pool.grados);
 
     const newData: IPool[] = [data_pool];
+    
     setData(newData);
+  }
+
+  const conversion=(temp:number, grados:string):number=>{
+  
+    let temp_ = 0;
+    switch (grados) {
+      case 'c':
+        temp_ = temp;
+        break;
+      case 'f':
+        temp_ = (temp*1.8)+32;
+        break;
+      case 'k':
+        temp_ = temp+274.15;
+        break;
+    }
+
+    return temp_;
+
   }
   return (
     <>
@@ -194,7 +225,10 @@ const Page: React.FC = () => {
                   />
 
                   <div className="contenedor_btns">
-                    <button className="btn btn_rename" onClick={handleSaveInfoPool}>Save info</button>
+                    <button className="btn btn_rename" onClick={handleSaveInfoPool}>
+                      Guardar datos
+                      <IonIcon slot="start" icon={save} className="icon_menu_Set" />
+                    </button>
                   </div>
 
 
@@ -209,7 +243,7 @@ const Page: React.FC = () => {
                       <div className="icono">
                         <IonIcon slot="start" ios={thermometer} md={thermometer} className="icon_home" />
                       </div>
-                      <span className="title_card">Temperature</span>
+                      <span className="title_card">Temperatura</span>
                       <div className="data">
                         <span className="numero">{(data?.[0]) && data?.[0].temp_current}</span>
                         <span className="tipo_dato">{
@@ -231,11 +265,11 @@ const Page: React.FC = () => {
                   </div>
 
                   <button className="btn_delete" onClick={() => setShowModal(true)}>
-                    <span>Delete this Pool</span>
+                    <span>Eliminar Pool</span>
                     <IonIcon slot="start" ios={trash} md={trash} className="icon_trash" />
                   </button>
                 </>
-                : <p>No hay piscina relacionada</p>
+                : <NoDataPool/>
             }
 
 
@@ -243,14 +277,14 @@ const Page: React.FC = () => {
 
           <IonModal
             isOpen={showModal}
-            cssClass='my-custom-class'
+            cssClass='my-custom-class_'
             onDidDismiss={() => setShowModal(false)}
           >
-            <div className="container_modal">
-              <span className="title_modal">Eliminar Piscina</span>
-              <span className="msg_modal">Desea eliminar la piscina?.</span>
+            <div className="container_modal_">
+              <span className="title_modal_l">Eliminar Piscina</span>
+              <span className="msg_modal">¿Desea eliminar la piscina?.</span>
               <div className="buttons">
-                <button onClick={() => setShowModal(false)} className="btn_close_modal_home" >Close Modal</button>
+                <button onClick={() => setShowModal(false)} className="btn_close_modal_home" >Cerrar alerta</button>
                 <button onClick={handleDeletePool} className="btn_delete_modal" >Eliminar</button>
               </div>
             </div>
@@ -258,17 +292,19 @@ const Page: React.FC = () => {
 
           <IonModal
             isOpen={modal.isShow}
-            cssClass='my-custom-class'
+            cssClass='my-custom-class_'
             onDidDismiss={() => setShowModal(false)}
+            showBackdrop
+           
         >
-            <div className="container_modal">
-                <span className="title_modal">{modal.title}</span>
+            <div className="container_modal_page">
+                <span className="title_modal_page">{modal.title}</span>
                 <span className="msg_modal">{modal.msg}</span>
                 <button onClick={() => setModal({
                    isShow: false,
                    msg: "",
                    title: ""
-                })} className="btn_close_modal_home" >Close Modal</button>
+                })} className="btn_close_modal_home" >Cerrar alerta</button>
             </div>
         </IonModal>
 
